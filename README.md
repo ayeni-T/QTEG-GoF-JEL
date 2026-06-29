@@ -10,25 +10,7 @@ Replication code for the paper:
 
 ## Overview
 
-This repository contains all simulation and plotting code used to produce the results in the paper. The proposed test is a characterisation-based goodness-of-fit procedure for the QTEG distribution, derived from the Lukacs independence property of the Gamma family. The JEL statistic follows a χ²₁ limiting distribution under the null, requiring no parametric bootstrap calibration. A Bartlett-corrected variant (BC-JEL) is also implemented. Comparison tests — Kolmogorov–Smirnov (KS), Anderson–Darling (AD), and Cramér–von Mises (CvM) — are calibrated via parametric bootstrap on identical simulated samples.
-
----
-
-## Repository Structure
-
-```
-QTEG_GoF/
-├── QTEG_GoF_Arctic.py          # Main simulation script (JEL + BC-JEL + EDF)
-├── qteg_gof_array.sh           # SLURM array job script (GSU ARCTIC HPC)
-├── QTEG_GoF_plot_results.py    # Figure generation script
-├── results/                    # Output directory (created automatically)
-│   ├── gof_block_XX.json       # Per-block simulation results
-│   ├── QTEG_GoF_full_results.csv
-│   ├── QTEG_GoF_full_results.json
-│   └── QTEG_GoF_realdata_results.json
-├── logs/                       # SLURM logs (created automatically)
-└── README.md
-```
+This repository contains all simulation and plotting code used to produce the results in the paper. The proposed test is a characterisation-based goodness-of-fit procedure for the QTEG distribution, derived from the Lukacs independence property of the Gamma family. The JEL statistic follows a χ²₁ limiting distribution under the null, requiring no parametric bootstrap calibration. A Bartlett-corrected variant (BC-JEL) is also implemented. Comparison tests, Kolmogorov–Smirnov (KS), Anderson–Darling (AD), and Cramér–von Mises (CvM), are calibrated via parametric bootstrap on identical simulated samples.
 
 ---
 
@@ -126,28 +108,16 @@ Figures saved to `results/` as both `.png` and `.pdf`:
 
 | File | Description |
 |---|---|
-| `fig1_size_all` | Empirical size — all 5 tests, 3 null scenarios |
-| `fig2_power_main` | Power curves — Weibull(1.5), LogNormal(0,1), Exponential(1) |
-| `fig3_power_hard` | Power curves — Gamma(2,1), Weibull(0.8) (near-null) |
-| `fig4_power_summary_n200` | Bar chart — power at n = 200, all alternatives |
+| `fig1_size_all` | Empirical size, all 5 tests, 3 null scenarios |
+| `fig2_power_main` | Power curves, Weibull(1.5), LogNormal(0,1), Exponential(1) |
+| `fig3_power_hard` | Power curves, Gamma(2,1), Weibull(0.8) (near-null) |
+| `fig4_power_summary_n200` | Bar chart, power at n = 200, all alternatives |
 | `fig5_sqrtY_overlay` | KDE vs fitted Gamma density (real data) |
 | `fig6_pp_plots` | PP plots with 95% KS band (real data) |
 | `fig_supp_null_calibration` | Mean JEL statistic converging to χ²₁ mean |
 
----
-
-## SLURM Configuration (GSU ARCTIC HPC)
-
-| Setting | Value |
-|---|---|
-| Partition | qCPU120 (or equivalent) |
-| Array | 0–71 |
-| CPUs per task | 2 |
-| Memory | 8G per task |
-| Wall time | 48 hours |
-
-Update `--account`, `--mail-user`, and all `/path/to/your/project/` placeholders
-in `qteg_gof_array.sh` before submitting.
+> **Note for HPC users:** Update `--account`, `--mail-user`, and all path
+> placeholders in `qteg_gof_array.sh` before submitting.
 
 ---
 
@@ -174,11 +144,5 @@ Distribution. Manuscript in preparation.
 
 ## Authors
 
-**Taiwo Michael Ayeni** — Ph.D. Candidate, Department of Mathematics and Statistics, Georgia State University  
-**Yichuan Zhao** — Professor, Department of Mathematics and Statistics, Georgia State University
-
----
-
-## License
-
-This code is made available for academic reproducibility purposes.
+**Taiwo Michael Ayeni**, Department of Mathematics and Statistics, Georgia State University  
+**Yichuan Zhao**, Department of Mathematics and Statistics, Georgia State University
