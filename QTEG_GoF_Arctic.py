@@ -6,15 +6,6 @@ Runs JEL, KS, AD, and CvM tests on EVERY replication using the SAME sample.
 Bootstrap B=300 parametric samples used to calibrate KS/AD/CvM under the
 composite QTEG null.
 
-Changes from v3:
-  - Added edf_statistics() and bootstrap_edf_pvalues()
-  - run_gof_test() now returns JEL + KS + AD + CvM results
-  - Simulation counters extended: rej_ks, rej_ad, rej_cvm
-  - _make_summary() extended with rej_ks, se_ks, rej_ad, se_ad,
-    rej_cvm, se_cvm
-  - CSV/JSON output includes all four tests
-  - Everything else unchanged (same kernel, same JEL, same blocks)
-
 All 72 blocks run in parallel via SLURM array.
 Blocks 0-11:  size study (3 null scenarios x 4 sample sizes)
 Blocks 12-71: power study (3 null scenarios x 5 alternatives x 4 sample sizes)
@@ -102,7 +93,7 @@ def qteg_mle(y):
     return dict(alpha=float(best_res.x[0]), beta=float(best_res.x[1]),
                 logL=-best_val, n=len(y))
 
-# ── Corrected kernel (v2, unchanged) ──────────────────────────────────────────
+# ── Corrected kernel ──────────────────────────────────────────
 def c_alpha_val(alpha):
     return 1.0 / (4.0 * (2.0*alpha + 1.0))
 
@@ -172,8 +163,7 @@ def bcjel_ratio(pv, jel_val):
     b_hat = 0.5 * mean(pv^4) / mean(pv^2)^2 - 1
     ell_BC = ell_JEL / (1 + b_hat / n)
     Reduces finite-sample size inflation while preserving power.
-    Reference: DiCiccio, Hall & Romano (1991 Ann. Stat.);
-               Hall & La Scala (1990).
+   
     """
     if not np.isfinite(jel_val): return np.inf
     n  = len(pv)
